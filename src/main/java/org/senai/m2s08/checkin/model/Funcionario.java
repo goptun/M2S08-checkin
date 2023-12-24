@@ -1,6 +1,8 @@
 package org.senai.m2s08.checkin.model;
 
 import jakarta.persistence.*;
+import org.senai.m2s08.checkin.model.transport.CriarFuncionarioDTO;
+import org.senai.m2s08.checkin.model.transport.RegistroPontoDTO;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -29,51 +31,33 @@ public class Funcionario {
     public Funcionario() {
     }
 
-    public Funcionario(Long id, String nome, String cargo, BigDecimal salario, List<RegistroPonto> registroPontos) {
-        this.id = id;
-        this.nome = nome;
-        this.cargo = cargo;
-        this.salario = salario;
-        this.registroPontos = registroPontos;
+    public Funcionario(CriarFuncionarioDTO body) {
+        this.nome = body.nome();
+        this.cargo = body.cargo();
+        this.salario = body.salario();
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getNome() {
         return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public String getCargo() {
         return cargo;
     }
 
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
-
     public BigDecimal getSalario() {
         return salario;
-    }
-
-    public void setSalario(BigDecimal salario) {
-        this.salario = salario;
     }
 
     public List<RegistroPonto> getRegistroPontos() {
         return registroPontos;
     }
 
-    public void setRegistroPontos(List<RegistroPonto> registroPontos) {
-        this.registroPontos = registroPontos;
+    public List<RegistroPontoDTO> getRegistoPontoComoObjeto() {
+        return this.registroPontos.stream().map(RegistroPontoDTO::new).toList();
     }
 }
